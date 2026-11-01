@@ -29,6 +29,24 @@ if [ -n "$SUPERVISOR_TOKEN" ]; then
   echo "Configuring MeshMonitor BASE_URL to: $BASE_URL"
 fi
 
+# HA_LOGIN: password-less login for Home Assistant users via ingress.
+# MeshMonitor trusts a header that only our nginx sets; its name is random
+# per start so nothing else on the add-on network can guess and forge it.
+NGINX_CONF=/etc/nginx/http.d/default.conf
+HA_LOGIN=$(jq --raw-output '.HA_LOGIN // false' $CONFIG_PATH)
+if [ "$HA_LOGIN" = "true" ]; then
+  HA_HDR="x-ha-login-$(head -c 16 /dev/urandom | od -An -tx1 | tr -d ' \n')"
+  export PROXY_AUTH_ENABLED=true
+  export PROXY_AUTH_AUTO_PROVISION=true
+  export PROXY_AUTH_HEADER_EMAIL="$HA_HDR"
+  export PROXY_AUTH_ADMIN_EMAILS=$(jq --raw-output '.HA_ADMINS // ""' $CONFIG_PATH \
+    | tr 'A-Z' 'a-z' | tr -d ' ' | tr ',' '\n' | sed '/^$/d; s/.*/ha-&@homeassistant/' | paste -sd, -)
+  sed -i "s/__HA_LOGIN_HEADER__/${HA_HDR}/" "$NGINX_CONF"
+  echo "HA login enabled (admins: $(echo "$PROXY_AUTH_ADMIN_EMAILS" | tr ',' ' ' | wc -w))"
+else
+  sed -i '/__HA_LOGIN_HEADER__/d' "$NGINX_CONF"
+fi
+
 mkdir -p /run/nginx
 nginx
 

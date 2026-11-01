@@ -17,6 +17,8 @@ options:
   MESHTASTIC_SERIAL_PORT: "/dev/ttyUSB0"
   SESSION_SECRET: "meshmonitor-secret-key-2024"
   DISABLE_ANONYMOUS: false
+  HA_LOGIN: false
+  HA_ADMINS: ""
 schema:
   connection_type: list(tcp|serial)
   MESHTASTIC_NODE_IP: str
@@ -24,6 +26,8 @@ schema:
   MESHTASTIC_SERIAL_PORT: str
   SESSION_SECRET: str
   DISABLE_ANONYMOUS: bool
+  HA_LOGIN: bool?
+  HA_ADMINS: str?
 ports:
   4404/tcp: 4404
   4405/tcp: 4405
