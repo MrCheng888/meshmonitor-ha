@@ -1,8 +1,8 @@
-name: "MeshMonitor"
+name: "MeshMonitor (multi-port)"
 description: "Meshtastic Monitoring Dashboard"
 version: "4.17.1"
 slug: "meshmonitor"
-url: https://github.com/BrainDeLook/meshmonitor-ha
+url: https://github.com/MrCheng888/meshmonitor-ha
 arch:
   - aarch64
   - amd64
@@ -26,8 +26,12 @@ schema:
   DISABLE_ANONYMOUS: bool
 ports:
   4404/tcp: 4404
+  4405/tcp: 4405
+  4406/tcp: 4406
 ports_description:
   4404/tcp: Virtual Node Server (for Meshtastic mobile apps)
+  4405/tcp: Virtual Node Server 2 (second source)
+  4406/tcp: Virtual Node Server 3 (third source)
 devices:
   - /dev/ttyUSB0
   - /dev/ttyUSB1
