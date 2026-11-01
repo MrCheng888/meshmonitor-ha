@@ -38,6 +38,7 @@ if [ "$HA_LOGIN" = "true" ]; then
   HA_HDR="x-ha-login-$(head -c 16 /dev/urandom | od -An -tx1 | tr -d ' \n')"
   export PROXY_AUTH_ENABLED=true
   export PROXY_AUTH_AUTO_PROVISION=true
+  export PROXY_AUTH_AUDIT_LOGGING=false  # otherwise every request is written to the audit log
   export PROXY_AUTH_HEADER_EMAIL="$HA_HDR"
   export PROXY_AUTH_ADMIN_EMAILS=$(jq --raw-output '.HA_ADMINS // ""' $CONFIG_PATH \
     | tr 'A-Z' 'a-z' | tr -d ' ' | tr ',' '\n' | sed '/^$/d; s/.*/ha-&@homeassistant/' | paste -sd, -)
