@@ -1,4 +1,4 @@
-name: "MeshMonitor (multi-port)"
+name: "MeshMonitor"
 description: "Meshtastic Monitoring Dashboard"
 version: "4.17.1"
 slug: "meshmonitor"
