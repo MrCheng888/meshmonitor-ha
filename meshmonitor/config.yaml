@@ -32,10 +32,12 @@ ports:
   4404/tcp: 4404
   4405/tcp: 4405
   4406/tcp: 4406
+  4407/tcp: 4407
 ports_description:
   4404/tcp: Virtual Node Server (for Meshtastic mobile apps)
   4405/tcp: Virtual Node Server 2 (second source)
   4406/tcp: Virtual Node Server 3 (third source)
+  4407/tcp: Virtual Node Server 4 (fourth source)
 devices:
   - /dev/ttyUSB0
   - /dev/ttyUSB1
