@@ -2,7 +2,7 @@ name: Auto-update addons
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '17 5,17 * * *'
   workflow_dispatch:
 
 jobs:
